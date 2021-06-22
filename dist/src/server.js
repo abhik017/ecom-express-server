@@ -109,6 +109,4 @@ var Server = /** @class */ (function () {
     return Server;
 }());
 exports.Server = Server;
-var server = new Server(function (app) { return app.route("/v0/signup").post(function (req, res) { console.log(req, res); }); });
-server.launchServer();
 //# sourceMappingURL=server.js.map
