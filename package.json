@@ -1,8 +1,9 @@
 {
     "name": "@abhik017/ecom-express-server",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Express server creation functionality.",
     "main": "dist/src/server.js",
+    "type": "dist/src/server.d.ts",
     "scripts": {
         "start": "node dist/src/server.js",
         "tslint-src": "tslint -c tslint.json -p tsconfig.src.json",
@@ -10,7 +11,6 @@
         "dev": "npm run tslint-src && npm run build",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "repository": "git:github.com/abhik017/ecom-express-server.git",
     "author": "Abhik Mehta",
     "license": "UNLICENSED",
     "dependencies": {
