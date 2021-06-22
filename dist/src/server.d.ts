@@ -4,6 +4,7 @@ export declare class Server {
     private static httpServer;
     private routes;
     private static readonly HTTP_PORT;
+    private static readonly dbUrl;
     private corsOption;
     constructor(routes: RoutesFunction);
     private initializeServer;

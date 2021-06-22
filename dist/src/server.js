@@ -35,6 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = void 0;
 var express = require("express");
@@ -43,6 +46,7 @@ var helmet = require("helmet");
 var http = require("http");
 // import https = require("https");
 var bodyParser = require("body-parser");
+var mongoose_1 = __importDefault(require("mongoose"));
 var Server = /** @class */ (function () {
     function Server(routes) {
         // private static readonly HTTPS_PORT = 8081;
@@ -68,7 +72,12 @@ var Server = /** @class */ (function () {
                 // Initialized routes
                 Server.httpServer = http.createServer(app);
                 // Server.httpsServer = https.createServer(options, app);
-                Server.httpServer.listen(Server.HTTP_PORT);
+                Server.httpServer.listen(Server.HTTP_PORT, function () { return console.log("Server is running on port " + Server.HTTP_PORT); });
+                // Server.httpServer.listen(Server.HTTPS_PORT);
+                mongoose_1.default.connect(Server.dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+                    .then(function () { return console.log("MongoDB connected successfully"); })
+                    .catch(function (err) { return console.log(err.message); });
+                mongoose_1.default.set('useFindAndModify', false);
                 return [2 /*return*/];
             });
         });
@@ -96,7 +105,10 @@ var Server = /** @class */ (function () {
         });
     };
     Server.HTTP_PORT = 8080;
+    Server.dbUrl = "mongodb+srv://abhik:qwerty123456@cluster0.hrszn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
     return Server;
 }());
 exports.Server = Server;
+var server = new Server(function (app) { return app.route("/v0/signup").post(function (req, res) { console.log(req, res); }); });
+server.launchServer();
 //# sourceMappingURL=server.js.map
