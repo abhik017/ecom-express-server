@@ -3,10 +3,10 @@ declare type RoutesFunction = (app: express.Express) => void;
 export declare class Server {
     private static httpServer;
     private routes;
-    private static readonly HTTP_PORT;
+    private HTTP_PORT;
     private static readonly dbUrl;
     private corsOption;
-    constructor(routes: RoutesFunction);
+    constructor(routes: RoutesFunction, port?: number);
     private initializeServer;
     launchServer(): Promise<void>;
     closeServer(): Promise<void>;

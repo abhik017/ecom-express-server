@@ -47,18 +47,23 @@ var http = require("http");
 // import https = require("https");
 var bodyParser = require("body-parser");
 var mongoose_1 = __importDefault(require("mongoose"));
+require("dotenv").config();
 var Server = /** @class */ (function () {
-    function Server(routes) {
+    function Server(routes, port) {
+        if (port === void 0) { port = 8080; }
+        this.HTTP_PORT = 8080;
         // private static readonly HTTPS_PORT = 8081;
         this.corsOption = {
             origin: false,
             methods: ["GET", "PUT", "POST", "PATCH", "HEAD", "DELETE"]
         };
         this.routes = routes;
+        this.HTTP_PORT = port;
     }
     Server.prototype.initializeServer = function () {
         return __awaiter(this, void 0, void 0, function () {
             var app;
+            var _this = this;
             return __generator(this, function (_a) {
                 app = express();
                 // created express app
@@ -72,7 +77,7 @@ var Server = /** @class */ (function () {
                 // Initialized routes
                 Server.httpServer = http.createServer(app);
                 // Server.httpsServer = https.createServer(options, app);
-                Server.httpServer.listen(Server.HTTP_PORT, function () { return console.log("Server is running on port " + Server.HTTP_PORT); });
+                Server.httpServer.listen(this.HTTP_PORT, function () { return console.log("Server is running on port " + _this.HTTP_PORT); });
                 // Server.httpServer.listen(Server.HTTPS_PORT);
                 mongoose_1.default.connect(Server.dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
                     .then(function () { return console.log("MongoDB connected successfully"); })
@@ -104,9 +109,9 @@ var Server = /** @class */ (function () {
             });
         });
     };
-    Server.HTTP_PORT = 8080;
-    Server.dbUrl = "mongodb+srv://abhik:qwerty123456@cluster0.hrszn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+    Server.dbUrl = process.env.MONGODB_CONNECT;
     return Server;
 }());
 exports.Server = Server;
+console.log(process.env.MONGODB_CONNECT);
 //# sourceMappingURL=server.js.map

@@ -1,6 +1,6 @@
 {
     "name": "@abhik017/ecom-express-server",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "description": "Express server creation functionality.",
     "main": "dist/src/server.js",
     "type": "dist/src/server.d.ts",
@@ -17,6 +17,7 @@
         "@types/node": "^15.12.4",
         "body-parser": "^1.19.0",
         "cors": "2.8.5",
+        "dotenv": "^10.0.0",
         "express": "4.17.1",
         "helmet": "4.6.0",
         "mongoose": "^5.12.14"

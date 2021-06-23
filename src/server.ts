@@ -5,23 +5,24 @@ import http = require("http");
 // import https = require("https");
 import bodyParser = require("body-parser");
 import mongoose from "mongoose";
-
+require("dotenv").config();
 type RoutesFunction = (app: express.Express) => void;
 
 export class Server {
     private static httpServer: http.Server;
     // private static httpsServer: https.Server;
     private routes: RoutesFunction;
-    private static readonly HTTP_PORT = 8080;
-    private static readonly dbUrl = "mongodb+srv://abhik:qwerty123456@cluster0.hrszn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+    private HTTP_PORT = 8080;
+    private static readonly dbUrl: string = process.env.MONGODB_CONNECT as string;
     // private static readonly HTTPS_PORT = 8081;
     private corsOption: cors.CorsOptions = {
         origin: false,
         methods: ["GET", "PUT", "POST", "PATCH", "HEAD", "DELETE"]
     };
 
-    constructor(routes: RoutesFunction) {
+    constructor(routes: RoutesFunction, port: number = 8080) {
         this.routes = routes;
+        this.HTTP_PORT = port;
     }
 
     private async initializeServer() {
@@ -37,7 +38,7 @@ export class Server {
         // Initialized routes
         Server.httpServer = http.createServer(app);
         // Server.httpsServer = https.createServer(options, app);
-        Server.httpServer.listen(Server.HTTP_PORT, () => console.log(`Server is running on port ${Server.HTTP_PORT}`));
+        Server.httpServer.listen(this.HTTP_PORT, () => console.log(`Server is running on port ${this.HTTP_PORT}`));
         // Server.httpServer.listen(Server.HTTPS_PORT);
 
         mongoose.connect(Server.dbUrl,{useNewUrlParser:true, useUnifiedTopology:true})
