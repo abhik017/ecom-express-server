@@ -4,9 +4,9 @@ export declare class Server {
     private static httpServer;
     private routes;
     private HTTP_PORT;
-    private static readonly dbUrl;
+    private dbUrl;
     private corsOption;
-    constructor(routes: RoutesFunction, port?: number);
+    constructor(routes: RoutesFunction, dbUrl: string, port?: number);
     private initializeServer;
     launchServer(): Promise<void>;
     closeServer(): Promise<void>;

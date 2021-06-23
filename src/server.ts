@@ -13,16 +13,17 @@ export class Server {
     // private static httpsServer: https.Server;
     private routes: RoutesFunction;
     private HTTP_PORT = 8080;
-    private static readonly dbUrl: string = process.env.MONGODB_CONNECT as string;
+    private dbUrl: string = "mongodb.com";
     // private static readonly HTTPS_PORT = 8081;
     private corsOption: cors.CorsOptions = {
         origin: false,
         methods: ["GET", "PUT", "POST", "PATCH", "HEAD", "DELETE"]
     };
 
-    constructor(routes: RoutesFunction, port: number = 8080) {
+    constructor(routes: RoutesFunction, dbUrl: string, port: number = 8080) {
         this.routes = routes;
         this.HTTP_PORT = port;
+        this.dbUrl = dbUrl;
     }
 
     private async initializeServer() {
@@ -41,7 +42,7 @@ export class Server {
         Server.httpServer.listen(this.HTTP_PORT, () => console.log(`Server is running on port ${this.HTTP_PORT}`));
         // Server.httpServer.listen(Server.HTTPS_PORT);
 
-        mongoose.connect(Server.dbUrl,{useNewUrlParser:true, useUnifiedTopology:true})
+        mongoose.connect(this.dbUrl,{useNewUrlParser:true, useUnifiedTopology:true})
         .then(() => console.log("MongoDB connected successfully"))
         .catch((err)=> console.log(err.message));
 

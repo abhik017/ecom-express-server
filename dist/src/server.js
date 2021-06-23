@@ -49,9 +49,10 @@ var bodyParser = require("body-parser");
 var mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv").config();
 var Server = /** @class */ (function () {
-    function Server(routes, port) {
+    function Server(routes, dbUrl, port) {
         if (port === void 0) { port = 8080; }
         this.HTTP_PORT = 8080;
+        this.dbUrl = "mongodb.com";
         // private static readonly HTTPS_PORT = 8081;
         this.corsOption = {
             origin: false,
@@ -59,6 +60,7 @@ var Server = /** @class */ (function () {
         };
         this.routes = routes;
         this.HTTP_PORT = port;
+        this.dbUrl = dbUrl;
     }
     Server.prototype.initializeServer = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -79,7 +81,7 @@ var Server = /** @class */ (function () {
                 // Server.httpsServer = https.createServer(options, app);
                 Server.httpServer.listen(this.HTTP_PORT, function () { return console.log("Server is running on port " + _this.HTTP_PORT); });
                 // Server.httpServer.listen(Server.HTTPS_PORT);
-                mongoose_1.default.connect(Server.dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+                mongoose_1.default.connect(this.dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
                     .then(function () { return console.log("MongoDB connected successfully"); })
                     .catch(function (err) { return console.log(err.message); });
                 mongoose_1.default.set('useFindAndModify', false);
@@ -109,9 +111,7 @@ var Server = /** @class */ (function () {
             });
         });
     };
-    Server.dbUrl = process.env.MONGODB_CONNECT;
     return Server;
 }());
 exports.Server = Server;
-console.log(process.env.MONGODB_CONNECT);
 //# sourceMappingURL=server.js.map
