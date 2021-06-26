@@ -16,8 +16,10 @@ export class Server {
     private dbUrl: string = "mongodb.com";
     // private static readonly HTTPS_PORT = 8081;
     private corsOption: cors.CorsOptions = {
-        origin: false,
-        methods: ["GET", "PUT", "POST", "PATCH", "HEAD", "DELETE"]
+        "origin": "*",
+        "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+        "preflightContinue": false,
+        "optionsSuccessStatus": 204
     };
 
     constructor(routes: RoutesFunction, dbUrl: string, port: number = 8080) {
